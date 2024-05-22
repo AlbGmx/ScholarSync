@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
@@ -14,6 +14,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Apis" Version="1.68.0" />
+        <PackageReference Include="Google.Apis.Calendar.v3" Version="1.68.0.3402" />
+        <PackageReference Include="Google.Apis.Tasks.v1" Version="1.68.0.3400" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="8.*" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
     </ItemGroup>
