@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace ScholarSync;
 
 static class Program
@@ -10,6 +12,6 @@ static class Program
     {
         Startup.Init();
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+        Application.Run(new Forms.Home());
     }
 }

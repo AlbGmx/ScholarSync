@@ -1,13 +1,10 @@
-﻿namespace ScholarSync;
+﻿namespace ScholarSync.Forms;
 
-partial class Form1
+partial class Home
 {
     private int PageWidth { get; set; }
     private int PageHeight { get; set; }
-
-    /// <summary>
-    ///  Required designer variable.
-    /// </summary>
+    
     private System.ComponentModel.IContainer components = null;
 
     /// <summary>
@@ -29,6 +26,7 @@ partial class Form1
     ///  Required method for Designer support - do not modify
     ///  the contents of this method with the code editor.
     /// </summary>
+
     private void InitializeComponent()
     {
         PageWidth = (int)(Screen.PrimaryScreen.Bounds.Width * 0.5);
@@ -36,7 +34,7 @@ partial class Form1
         this.components = new System.ComponentModel.Container();
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(PageWidth, PageHeight);
-        this.Text = "Home";
+        this.Text = APPLICATION_NAME;
     }
 
     #endregion
