@@ -31,6 +31,9 @@
         <Content Update="wwwroot\index.html">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Update="settings.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

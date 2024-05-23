@@ -2,6 +2,9 @@
 
 partial class Form1
 {
+    private int PageWidth { get; set; }
+    private int PageHeight { get; set; }
+
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -28,9 +31,11 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
+        PageWidth = (int)(Screen.PrimaryScreen.Bounds.Width * 0.5);
+        PageHeight = (int)(Screen.PrimaryScreen.Bounds.Height * 0.5);
         this.components = new System.ComponentModel.Container();
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(600, 800);
+        this.ClientSize = new System.Drawing.Size(PageWidth, PageHeight);
         this.Text = "Home";
     }
 
