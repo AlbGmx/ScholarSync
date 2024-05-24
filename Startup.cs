@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ScholarSync.Data;
 
 namespace ScholarSync;
 
@@ -19,7 +18,6 @@ public static class Startup
     private static void WireupServices(IServiceCollection services)
     {
         services.AddWindowsFormsBlazorWebView();
-        services.AddSingleton<WeatherForecastService>();
 
 #if DEBUG
         services.AddBlazorWebViewDeveloperTools();
