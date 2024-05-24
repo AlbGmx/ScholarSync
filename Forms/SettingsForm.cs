@@ -4,9 +4,11 @@ namespace ScholarSync.Forms
     {
         private int PageWidth { get; set; }
         private int PageHeight { get; set; }
+        private BlockedApps? blockedApps;
         private Button? btnBlockedAppList;
         private Button? btnDayRanges;
         private Button? btnGoogleCalendar;
+        private Button? btnBack;
         private System.ComponentModel.IContainer components = new System.ComponentModel.Container();
 
         public SettingsForm()
@@ -41,6 +43,7 @@ namespace ScholarSync.Forms
         {
             btnBlockedAppList = CreateButton("APLICACIONES NO PERMITIDAS");
             btnBlockedAppList.Name = "btnBlockedAppList";
+            btnBlockedAppList.Click += new EventHandler(BlockedAppsButton_Clicked);
             Controls.Add(btnBlockedAppList);
 
             btnDayRanges = CreateButton("AJUSTES DE RANGO");
@@ -50,6 +53,12 @@ namespace ScholarSync.Forms
             btnGoogleCalendar = CreateButton("GOOGLE CALENDAR");
             btnGoogleCalendar.Name = "btnGoogleCalendar";
             Controls.Add(btnGoogleCalendar);
+
+            btnBack = CreateButton("Atras");
+            btnBack.Name = "btnBack";
+            btnBack.Click += new EventHandler(BackButton_Clicked);
+            Controls.Add(btnBack);
+            
 
             ResizeButtons();
         }
@@ -93,6 +102,39 @@ namespace ScholarSync.Forms
                btnGoogleCalendar.Left = 0;
                btnGoogleCalendar.Top = btnDayRanges.Bottom + margin;
             }
+        }
+
+        private void BackButton_Clicked(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BlockedAppsButton_Clicked(object? sender, EventArgs e)
+        {
+            if (blockedApps == null || blockedApps.IsDisposed)
+            {
+                blockedApps = new BlockedApps();
+                blockedApps.FormClosing += BlockedApp_FormClosing;
+            }
+
+            blockedApps.StartPosition = FormStartPosition.Manual;
+            blockedApps.Location = this.Location;
+            blockedApps.Size = this.Size;
+            blockedApps.Show();
+            Hide();
+        }
+
+        private void BlockedApp_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+            }
+
+            Location = blockedApps?.Location ?? Location;
+            Size = blockedApps?.Size ?? Size;
+            Show();
+            blockedApps?.Hide();
         }
     }
 }
