@@ -7,40 +7,33 @@ namespace SchoolSync
     public partial class HomeForm : Form
     {
 
-        private readonly UserCredential userCredential;
-        private readonly CalendarService service;
+        private readonly UserCredential? userCredential;
+        private readonly CalendarService? service;
 
         bool sidebarMenuExpanded = false;
 
-        BlockedAppsForm blockedAppsForm;
-        SettingsForm settingsForm;
-        GoogleAccountForm googleAccountForm;
+        BlockedAppsForm? blockedAppsForm;
+        SettingsForm? settingsForm;
+        GoogleAccountForm? googleAccountForm;
 
         public HomeForm()
         {
             InitializeComponent();
             userCredential = GoogleAPI.GoogleAuth();
             service = GoogleAPI.CreateCalendarService(userCredential);
-            CalendarWebView();
         }
 
-        private void mdiProp()
+        private void HomeForm_Load(object? sender, EventArgs e)
         {
-            this.SetBevel(false);
-            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(232, 234, 237);
+            calendarWebView.Source = new Uri("https://calendar.google.com/calendar/");
         }
 
-        private void CalendarWebView()
-        {
-            webView2.Name = "webView2";
-            webView2.Source = new Uri("https://calendar.google.com/calendar/");
-        }
-
-        private void sidebarMenuTimer_Tick(object sender, EventArgs e)
+        private void SidebarMenuTimer_Tick(object sender, EventArgs e)
         {
             if (sidebarMenuExpanded == false)
             {
                 sidebarMenu.Width += 10;
+                homePanel.Location = new Point(sidebarMenu.Width, 0);
                 if (sidebarMenu.Width >= sidebarMenu.MaximumSize.Width)
                 {
                     sidebarMenuExpanded = true;
@@ -56,14 +49,15 @@ namespace SchoolSync
                     sidebarMenuTimer.Stop();
                 }
             }
+            homePanel.Location = new Point(sidebarMenu.Width, 0);
         }
 
-        private void menuButton_Click(object sender, EventArgs e)
+        private void MenuControl_Clicked(object sender, EventArgs e)
         {
             sidebarMenuTimer.Start();
         }
 
-        private void btnNoAllowedApps_Click(object sender, EventArgs e)
+        private void NoAllowedAppsControl_Clicked(object sender, EventArgs e)
         {
             if (blockedAppsForm == null)
             {
@@ -81,31 +75,28 @@ namespace SchoolSync
 
         private void BlockedApps_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            blockedAppsForm = null;
+            Show();
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void SettingsControl_Clicked(object sender, EventArgs e)
         {
-            if (settingsForm == null)
+            homePanel.Controls.Clear();
+            settingsForm = new SettingsForm()
             {
-                settingsForm = new SettingsForm();
-                settingsForm.FormClosed += SettingsForm_FormClosed;
-                settingsForm.MdiParent = this;
-                settingsForm.Dock = DockStyle.Fill;
-                settingsForm.Show();
-            }
-            else
-            {
-                settingsForm.Activate();
-            }
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+            };
+            homePanel.Controls.Add(settingsForm);
+            settingsForm.Show();
         }
 
         private void SettingsForm_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            settingsForm = null;
+            this.Show();
         }
 
-        private void btnGoogleAccount_Click(object sender, EventArgs e)
+        private void GoogleAccountControl_Clicked(object? sender, EventArgs e)
         {
             if (googleAccountForm == null)
             {
@@ -123,7 +114,13 @@ namespace SchoolSync
 
         private void GoogleAccountForm_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            googleAccountForm = null;
+            Show();
+        }
+
+        private void HomeForm_SizeChanged(object? sender, EventArgs e)
+        {
+            homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
+            calendarWebView.Size = homePanel.Size;
         }
     }
 }
