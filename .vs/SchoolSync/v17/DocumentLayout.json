@@ -1,0 +1,118 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\settingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\settingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\settingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\settingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\googleaccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\googleaccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\blockedappsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\blockedappsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\homeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\homeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|c:\\users\\pablo\\onedrive\\escritorio\\projecto test\\schoolsync\\schoolsync\\forms\\blockedappsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AED482B-4F12-4A4F-8EBA-A404E1AFF8D2}|SchoolSync\\SchoolSync.csproj|solutionrelative:schoolsync\\forms\\blockedappsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SettingsForm.cs",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\SettingsForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\SettingsForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\SettingsForm.cs",
+              "RelativeToolTip": "SchoolSync\\Forms\\SettingsForm.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:50:08.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingsForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\SettingsForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\SettingsForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\SettingsForm.cs [Design]",
+              "RelativeToolTip": "SchoolSync\\Forms\\SettingsForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:50:02.55Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GoogleAccountForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\GoogleAccountForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\GoogleAccountForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\GoogleAccountForm.cs [Design]",
+              "RelativeToolTip": "SchoolSync\\Forms\\GoogleAccountForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:49:40.695Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomeForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\HomeForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\HomeForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\HomeForm.cs [Design]",
+              "RelativeToolTip": "SchoolSync\\Forms\\HomeForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:48:20.84Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BlockedAppsForm.cs",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "RelativeToolTip": "SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:47:35.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BlockedAppsForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "RelativeDocumentMoniker": "SchoolSync\\Forms\\BlockedAppsForm.cs",
+              "ToolTip": "C:\\Users\\pablo\\OneDrive\\Escritorio\\Projecto Test\\SchoolSync\\SchoolSync\\Forms\\BlockedAppsForm.cs [Design]",
+              "RelativeToolTip": "SchoolSync\\Forms\\BlockedAppsForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-25T01:47:01.655Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
