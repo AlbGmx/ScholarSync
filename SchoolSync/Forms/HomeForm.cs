@@ -6,6 +6,9 @@ namespace SchoolSync
 {
     public partial class HomeForm : Form
     {
+        private SettingsData? settingsData;
+        public int? FromDate { get; set; }
+        public int? UntilDate { get; set; }
 
         private readonly UserCredential? userCredential;
         private readonly CalendarService? service;
@@ -19,13 +22,27 @@ namespace SchoolSync
         public HomeForm()
         {
             InitializeComponent();
+            LoadSettings();
             userCredential = GoogleAPI.GoogleAuth();
             service = GoogleAPI.CreateCalendarService(userCredential);
+            UpdateDaysCountLabels();
         }
 
-        private void HomeForm_Load(object? sender, EventArgs e)
+        private void LoadSettings()
         {
-            calendarWebView.Source = new Uri("https://calendar.google.com/calendar/");
+            settingsData = Utils.LoadSettings();
+            FromDate = settingsData.FromDate;
+            UntilDate = settingsData.UntilDate;
+        }
+
+        private void SaveSettings()
+        {
+            SettingsData dataToSave = new()
+            {
+                FromDate = FromDate,
+                UntilDate = UntilDate,
+            };
+            Utils.SaveSettings(dataToSave);
         }
 
         private void SidebarMenuTimer_Tick(object sender, EventArgs e)
@@ -33,7 +50,6 @@ namespace SchoolSync
             if (sidebarMenuExpanded == false)
             {
                 sidebarMenu.Width += 10;
-                homePanel.Location = new Point(sidebarMenu.Width, 0);
                 if (sidebarMenu.Width >= sidebarMenu.MaximumSize.Width)
                 {
                     sidebarMenuExpanded = true;
@@ -49,7 +65,7 @@ namespace SchoolSync
                     sidebarMenuTimer.Stop();
                 }
             }
-            homePanel.Location = new Point(sidebarMenu.Width, 0);
+            homePanel.Location = new Point(sidebarMenu.Width, homePanel.Location.Y);
         }
 
         private void MenuControl_Clicked(object sender, EventArgs e)
@@ -59,23 +75,17 @@ namespace SchoolSync
 
         private void NoAllowedAppsControl_Clicked(object sender, EventArgs e)
         {
-            if (blockedAppsForm == null)
+            homePanel.Controls.Clear();
+            blockedAppsForm = new BlockedAppsForm()
             {
-                blockedAppsForm = new BlockedAppsForm();
-                blockedAppsForm.FormClosed += BlockedApps_FormClosed;
-                blockedAppsForm.MdiParent = this;
-                blockedAppsForm.Dock = DockStyle.Fill;
-                blockedAppsForm.Show();
-            }
-            else
-            {
-                blockedAppsForm.Activate();
-            }
-        }
-
-        private void BlockedApps_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            Show();
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+            };
+            homePanel.Controls.Add(blockedAppsForm);
+            ShrinkSidebarMenu();
+            blockedAppsForm.Show();
+            ReturnControl.Show();
         }
 
         private void SettingsControl_Clicked(object sender, EventArgs e)
@@ -88,39 +98,90 @@ namespace SchoolSync
                 Dock = DockStyle.Fill,
             };
             homePanel.Controls.Add(settingsForm);
+            ShrinkSidebarMenu();
+            settingsForm.ReceiveData(FromDate, UntilDate);
             settingsForm.Show();
-        }
-
-        private void SettingsForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            this.Show();
+            ReturnControl.Show();
         }
 
         private void GoogleAccountControl_Clicked(object? sender, EventArgs e)
         {
-            if (googleAccountForm == null)
+            homePanel.Controls.Clear();
+            googleAccountForm = new GoogleAccountForm()
             {
-                googleAccountForm = new GoogleAccountForm();
-                googleAccountForm.FormClosed += GoogleAccountForm_FormClosed;
-                googleAccountForm.MdiParent = this;
-                googleAccountForm.Dock = DockStyle.Fill;
-                googleAccountForm.Show();
+                TopLevel = false,
+                MdiParent = this,
+                Dock = DockStyle.Fill,
+            };
+            homePanel.Controls.Add(googleAccountForm);
+            ShrinkSidebarMenu();
+            googleAccountForm.Show();
+            ReturnControl.Show();
+        }
+
+        private void ReturnControl_Clicked(object? sender, EventArgs e)
+        {
+            Control control = homePanel.Controls[0];
+            Type? currentFormType;
+            if (control is Form form)
+            {
+                currentFormType = form.GetType();
+
+                if (currentFormType.Name == "SettingsForm")
+                {
+                    int[] dataArray = settingsForm.GetFormData();
+                    FromDate = dataArray[0];
+                    UntilDate = dataArray[1];
+                }
+            }
+            homePanel.Controls.Clear();
+            calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2()
+            {
+                Dock = DockStyle.Fill,
+                Source = new Uri("https://calendar.google.com/calendar/u/0/r"),
+            };
+            homePanel.Controls.Add(calendarWebView);
+            ReturnControl.Hide();
+            calendarWebView.Show();
+            ShrinkSidebarMenu();
+            UpdateDaysCountLabels();
+        }
+
+        private void UpdateDaysCountLabels()
+        {
+            if (FromDate != null && UntilDate != null)
+            {
+                LabelUntilDate.Text = UntilDate.ToString();
+                LabelUntilDate.ForeColor = Color.Black;
+                LabelFromDate.Text = FromDate.ToString();
+                LabelFromDate.ForeColor = Color.Black;
             }
             else
             {
-                googleAccountForm.Activate();
+                LabelUntilDate.Text = "0";
+                LabelUntilDate.ForeColor = Color.Red;
+                LabelFromDate.Text = "0";
+                LabelFromDate.ForeColor = Color.Red;
             }
         }
 
-        private void GoogleAccountForm_FormClosed(object? sender, FormClosedEventArgs e)
+        private void ShrinkSidebarMenu()
         {
-            Show();
+            if (sidebarMenuExpanded == true)
+            {
+                sidebarMenuTimer.Start();
+            }
+        }
+
+        private void HomeForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
         }
 
         private void HomeForm_SizeChanged(object? sender, EventArgs e)
         {
             homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
-            calendarWebView.Size = homePanel.Size;
         }
+
     }
 }

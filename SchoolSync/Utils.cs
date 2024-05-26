@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
+﻿using Newtonsoft.Json;
 using System.Management;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 
 namespace SchoolSync
 {
+    public class SettingsData
+    {
+        public int? FromDate { get; set; }
+        public int? UntilDate { get; set; }
+    }
+
     internal class Utils
     {
+        private static List<string> applicationList = new();
         private const string wmiQuery = "SELECT * FROM Win32_ProcessStartTrace";
-        private const string filePath = "applicationsList.txt";
-        private static List<string> applicationList = new List<string>();
+        private const string filePath = "applicationsList.bin";
+        private const string settingsPath = "settings.bin";
+
 
         public static void processWatcher()
         {
@@ -79,5 +80,29 @@ namespace SchoolSync
 
             return applicationList;
         }
+
+        public static void SaveSettings(SettingsData data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            File.WriteAllText(settingsPath, json);
+        }
+
+        public static SettingsData LoadSettings()
+        {
+            if (File.Exists(settingsPath))
+            {
+                string json = File.ReadAllText(settingsPath);
+                return JsonConvert.DeserializeObject<SettingsData>(json);
+            }
+            else
+            {
+                return new SettingsData()
+                {
+                    FromDate = 0,
+                    UntilDate = 0,
+                };
+            }
+        }
+
     }
 }
