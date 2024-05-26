@@ -31,7 +31,6 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            webView2 = new Microsoft.Web.WebView2.WinForms.WebView2();
             menuButton = new PictureBox();
             sidebarMenu = new FlowLayoutPanel();
             panel2 = new Panel();
@@ -41,24 +40,16 @@
             panel3 = new Panel();
             btnGoogleAccount = new Button();
             sidebarMenuTimer = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)webView2).BeginInit();
+            homePanel = new Panel();
+            calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             ((System.ComponentModel.ISupportInitialize)menuButton).BeginInit();
             sidebarMenu.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
+            homePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)calendarWebView).BeginInit();
             SuspendLayout();
-            // 
-            // webView2
-            // 
-            webView2.AllowExternalDrop = true;
-            webView2.CreationProperties = null;
-            webView2.DefaultBackgroundColor = Color.White;
-            webView2.Location = new Point(56, 12);
-            webView2.Name = "webView2";
-            webView2.Size = new Size(242, 158);
-            webView2.TabIndex = 0;
-            webView2.ZoomFactor = 1D;
             // 
             // menuButton
             // 
@@ -70,11 +61,11 @@
             menuButton.SizeMode = PictureBoxSizeMode.StretchImage;
             menuButton.TabIndex = 2;
             menuButton.TabStop = false;
-            menuButton.Click += menuButton_Click;
+            menuButton.Click += MenuControl_Clicked;
             // 
             // sidebarMenu
             // 
-            sidebarMenu.BackColor = Color.DimGray;
+            sidebarMenu.BackColor = Color.Transparent;
             sidebarMenu.Controls.Add(menuButton);
             sidebarMenu.Controls.Add(panel2);
             sidebarMenu.Controls.Add(panel4);
@@ -84,8 +75,8 @@
             sidebarMenu.MaximumSize = new Size(250, 0);
             sidebarMenu.MinimumSize = new Size(50, 0);
             sidebarMenu.Name = "sidebarMenu";
-            sidebarMenu.Size = new Size(50, 761);
-            sidebarMenu.TabIndex = 2;
+            sidebarMenu.Size = new Size(50, 729);
+            sidebarMenu.TabIndex = 0;
             // 
             // panel2
             // 
@@ -103,7 +94,7 @@
             btnNoAllowedApps.TabIndex = 4;
             btnNoAllowedApps.Text = "No Allowed Apps";
             btnNoAllowedApps.UseVisualStyleBackColor = true;
-            btnNoAllowedApps.Click += btnNoAllowedApps_Click;
+            btnNoAllowedApps.Click += NoAllowedAppsControl_Clicked;
             // 
             // panel4
             // 
@@ -119,9 +110,9 @@
             btnSettings.Name = "btnSettings";
             btnSettings.Size = new Size(260, 70);
             btnSettings.TabIndex = 4;
-            btnSettings.Text = "Google Account";
+            btnSettings.Text = "Settings";
             btnSettings.UseVisualStyleBackColor = true;
-            btnSettings.Click += btnSettings_Click;
+            btnSettings.Click += SettingsControl_Clicked;
             // 
             // panel3
             // 
@@ -137,39 +128,65 @@
             btnGoogleAccount.Name = "btnGoogleAccount";
             btnGoogleAccount.Size = new Size(260, 70);
             btnGoogleAccount.TabIndex = 4;
-            btnGoogleAccount.Text = "Settings";
+            btnGoogleAccount.Text = "Google Account";
             btnGoogleAccount.UseVisualStyleBackColor = true;
-            btnGoogleAccount.Click += btnGoogleAccount_Click;
+            btnGoogleAccount.Click += GoogleAccountControl_Clicked;
             // 
             // sidebarMenuTimer
             // 
             sidebarMenuTimer.Interval = 5;
-            sidebarMenuTimer.Tick += sidebarMenuTimer_Tick;
+            sidebarMenuTimer.Tick += SidebarMenuTimer_Tick;
+            // 
+            // homePanel
+            // 
+            homePanel.BackColor = SystemColors.ActiveCaption;
+            homePanel.Controls.Add(calendarWebView);
+            homePanel.Location = new Point(50, 0);
+            homePanel.Name = "homePanel";
+            homePanel.Size = new Size(959, 729);
+            homePanel.TabIndex = 0;
+            // 
+            // calendarWebView
+            // 
+            calendarWebView.AllowExternalDrop = true;
+            calendarWebView.CreationProperties = null;
+            calendarWebView.DefaultBackgroundColor = Color.IndianRed;
+            calendarWebView.Dock = DockStyle.Fill;
+            calendarWebView.Location = new Point(0, 0);
+            calendarWebView.Margin = new Padding(10);
+            calendarWebView.MinimumSize = new Size(800, 600);
+            calendarWebView.Name = "calendarWebView";
+            calendarWebView.Padding = new Padding(10);
+            calendarWebView.Size = new Size(959, 729);
+            calendarWebView.Source = new Uri("https://calendar.google.com/calendar/u/0/r", UriKind.Absolute);
+            calendarWebView.TabIndex = 0;
+            calendarWebView.ZoomFactor = 1D;
             // 
             // HomeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1280, 761);
+            ClientSize = new Size(1008, 729);
             Controls.Add(sidebarMenu);
-            Controls.Add(webView2);
+            Controls.Add(homePanel);
             IsMdiContainer = true;
-            MinimumSize = new Size(1280, 800);
+            MinimumSize = new Size(800, 600);
             Name = "HomeForm";
-            Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)webView2).EndInit();
+            SizeGripStyle = SizeGripStyle.Show;
+            SizeChanged += HomeForm_SizeChanged;
             ((System.ComponentModel.ISupportInitialize)menuButton).EndInit();
             sidebarMenu.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            homePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)calendarWebView).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView2;
         private PictureBox menuButton;
         private FlowLayoutPanel sidebarMenu;
         private Panel panel2;
@@ -179,5 +196,7 @@
         private Panel panel4;
         private Button btnSettings;
         private System.Windows.Forms.Timer sidebarMenuTimer;
+        private Panel homePanel;
+        private Microsoft.Web.WebView2.WinForms.WebView2 calendarWebView;
     }
 }
