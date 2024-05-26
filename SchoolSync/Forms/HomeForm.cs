@@ -59,26 +59,20 @@ namespace SchoolSync
 
         private void NoAllowedAppsControl_Clicked(object sender, EventArgs e)
         {
-            if (blockedAppsForm == null)
+            homePanel.Controls.Clear();
+            blockedAppsForm = new BlockedAppsForm()
             {
-                blockedAppsForm = new BlockedAppsForm();
-                blockedAppsForm.FormClosed += BlockedApps_FormClosed;
-                blockedAppsForm.MdiParent = this;
-                blockedAppsForm.Dock = DockStyle.Fill;
-                blockedAppsForm.Show();
-            }
-            else
-            {
-                blockedAppsForm.Activate();
-            }
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+            };
+            homePanel.Controls.Add(blockedAppsForm);
+            ShrinkSidebarMenu();
+            blockedAppsForm.Show();
+            returnControl.Show();
         }
 
-        private void BlockedApps_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            Show();
-        }
-
-        private void SettingsControl_Clicked(object sender, EventArgs e)
+        private void SettingsControl_Clicked(object? sender, EventArgs e)
         {
             homePanel.Controls.Clear();
             settingsForm = new SettingsForm()
@@ -88,39 +82,51 @@ namespace SchoolSync
                 Dock = DockStyle.Fill,
             };
             homePanel.Controls.Add(settingsForm);
+            ShrinkSidebarMenu();
             settingsForm.Show();
-        }
-
-        private void SettingsForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            this.Show();
+            returnControl.Show();
         }
 
         private void GoogleAccountControl_Clicked(object? sender, EventArgs e)
         {
-            if (googleAccountForm == null)
+            homePanel.Controls.Clear();
+            googleAccountForm = new GoogleAccountForm()
             {
-                googleAccountForm = new GoogleAccountForm();
-                googleAccountForm.FormClosed += GoogleAccountForm_FormClosed;
-                googleAccountForm.MdiParent = this;
-                googleAccountForm.Dock = DockStyle.Fill;
-                googleAccountForm.Show();
-            }
-            else
-            {
-                googleAccountForm.Activate();
-            }
-        }
-
-        private void GoogleAccountForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            Show();
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+            };
+            homePanel.Controls.Add(googleAccountForm);
+            ShrinkSidebarMenu();
+            googleAccountForm.Show();
+            returnControl.Show();
         }
 
         private void HomeForm_SizeChanged(object? sender, EventArgs e)
         {
             homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
-            calendarWebView.Size = homePanel.Size;
+        }
+
+        private void ReturnContol_Clicked(object? sender, EventArgs e)
+        {
+            homePanel.Controls.Clear();
+            calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2()
+            {
+                Dock = DockStyle.Fill,
+                Source = new Uri("https://calendar.google.com/calendar/u/0/r"),
+            };
+            homePanel.Controls.Add(calendarWebView);
+            returnControl.Hide();
+            calendarWebView.Show();
+            ShrinkSidebarMenu();
+        }
+
+        private void ShrinkSidebarMenu()
+        {
+            if (sidebarMenuExpanded == true)
+            {
+                sidebarMenuTimer.Start();
+            }
         }
     }
 }
