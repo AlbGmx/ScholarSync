@@ -17,9 +17,14 @@ namespace SchoolSync.Forms
             InitializeComponent();
         }
 
-        private void SettingsForm_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object? sender, EventArgs e)
         {
-            this.ControlBox = false;
+            ControlBox = false;
+        }
+
+        private void ReturnControl_Clicked(object? sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

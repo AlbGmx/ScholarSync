@@ -34,11 +34,12 @@
             menuButton = new PictureBox();
             sidebarMenu = new FlowLayoutPanel();
             panel2 = new Panel();
-            btnNoAllowedApps = new Button();
+            NoAllowedAppsControl = new Button();
             panel4 = new Panel();
-            btnSettings = new Button();
+            SettingsControl = new Button();
             panel3 = new Panel();
-            btnGoogleAccount = new Button();
+            GoogleAccountControl = new Button();
+            returnControl = new Button();
             sidebarMenuTimer = new System.Windows.Forms.Timer(components);
             homePanel = new Panel();
             calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
@@ -65,72 +66,84 @@
             // 
             // sidebarMenu
             // 
-            sidebarMenu.BackColor = Color.Transparent;
+            sidebarMenu.BackColor = Color.DarkGray;
             sidebarMenu.Controls.Add(menuButton);
             sidebarMenu.Controls.Add(panel2);
             sidebarMenu.Controls.Add(panel4);
             sidebarMenu.Controls.Add(panel3);
+            sidebarMenu.Controls.Add(returnControl);
             sidebarMenu.Dock = DockStyle.Left;
             sidebarMenu.Location = new Point(0, 0);
             sidebarMenu.MaximumSize = new Size(250, 0);
             sidebarMenu.MinimumSize = new Size(50, 0);
             sidebarMenu.Name = "sidebarMenu";
-            sidebarMenu.Size = new Size(50, 729);
+            sidebarMenu.Size = new Size(50, 820);
             sidebarMenu.TabIndex = 0;
             // 
             // panel2
             // 
-            panel2.Controls.Add(btnNoAllowedApps);
+            panel2.Controls.Add(NoAllowedAppsControl);
             panel2.Location = new Point(3, 49);
             panel2.Name = "panel2";
             panel2.Size = new Size(250, 60);
             panel2.TabIndex = 3;
             // 
-            // btnNoAllowedApps
+            // NoAllowedAppsControl
             // 
-            btnNoAllowedApps.Location = new Point(-5, -5);
-            btnNoAllowedApps.Name = "btnNoAllowedApps";
-            btnNoAllowedApps.Size = new Size(260, 70);
-            btnNoAllowedApps.TabIndex = 4;
-            btnNoAllowedApps.Text = "No Allowed Apps";
-            btnNoAllowedApps.UseVisualStyleBackColor = true;
-            btnNoAllowedApps.Click += NoAllowedAppsControl_Clicked;
+            NoAllowedAppsControl.Location = new Point(-5, -5);
+            NoAllowedAppsControl.Name = "NoAllowedAppsControl";
+            NoAllowedAppsControl.Size = new Size(260, 70);
+            NoAllowedAppsControl.TabIndex = 4;
+            NoAllowedAppsControl.Text = "No Allowed Apps";
+            NoAllowedAppsControl.UseVisualStyleBackColor = true;
+            NoAllowedAppsControl.Click += NoAllowedAppsControl_Clicked;
             // 
             // panel4
             // 
-            panel4.Controls.Add(btnSettings);
+            panel4.Controls.Add(SettingsControl);
             panel4.Location = new Point(3, 115);
             panel4.Name = "panel4";
             panel4.Size = new Size(250, 60);
             panel4.TabIndex = 5;
             // 
-            // btnSettings
+            // SettingsControl
             // 
-            btnSettings.Location = new Point(-5, -5);
-            btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(260, 70);
-            btnSettings.TabIndex = 4;
-            btnSettings.Text = "Settings";
-            btnSettings.UseVisualStyleBackColor = true;
-            btnSettings.Click += SettingsControl_Clicked;
+            SettingsControl.Location = new Point(-5, -5);
+            SettingsControl.Name = "SettingsControl";
+            SettingsControl.Size = new Size(260, 70);
+            SettingsControl.TabIndex = 4;
+            SettingsControl.Text = "Settings";
+            SettingsControl.UseVisualStyleBackColor = true;
+            SettingsControl.Click += SettingsControl_Clicked;
             // 
             // panel3
             // 
-            panel3.Controls.Add(btnGoogleAccount);
+            panel3.Controls.Add(GoogleAccountControl);
             panel3.Location = new Point(3, 181);
             panel3.Name = "panel3";
             panel3.Size = new Size(250, 60);
             panel3.TabIndex = 4;
             // 
-            // btnGoogleAccount
+            // GoogleAccountControl
             // 
-            btnGoogleAccount.Location = new Point(-5, -5);
-            btnGoogleAccount.Name = "btnGoogleAccount";
-            btnGoogleAccount.Size = new Size(260, 70);
-            btnGoogleAccount.TabIndex = 4;
-            btnGoogleAccount.Text = "Google Account";
-            btnGoogleAccount.UseVisualStyleBackColor = true;
-            btnGoogleAccount.Click += GoogleAccountControl_Clicked;
+            GoogleAccountControl.Location = new Point(-5, -5);
+            GoogleAccountControl.Name = "GoogleAccountControl";
+            GoogleAccountControl.Size = new Size(260, 70);
+            GoogleAccountControl.TabIndex = 4;
+            GoogleAccountControl.Text = "Google Account";
+            GoogleAccountControl.UseVisualStyleBackColor = true;
+            GoogleAccountControl.Click += GoogleAccountControl_Clicked;
+            // 
+            // returnControl
+            // 
+            returnControl.Location = new Point(3, 247);
+            returnControl.Name = "returnControl";
+            returnControl.Size = new Size(260, 70);
+            returnControl.TabIndex = 4;
+            returnControl.Text = "Regresar a Inicio";
+            returnControl.UseVisualStyleBackColor = true;
+            returnControl.Visible = false;
+            returnControl.Click += ReturnContol_Clicked;
             // 
             // sidebarMenuTimer
             // 
@@ -139,16 +152,17 @@
             // 
             // homePanel
             // 
-            homePanel.BackColor = SystemColors.ActiveCaption;
+            homePanel.BackColor = Color.White;
             homePanel.Controls.Add(calendarWebView);
             homePanel.Location = new Point(50, 0);
             homePanel.Name = "homePanel";
-            homePanel.Size = new Size(959, 729);
+            homePanel.Size = new Size(1092, 820);
             homePanel.TabIndex = 0;
             // 
             // calendarWebView
             // 
             calendarWebView.AllowExternalDrop = true;
+            calendarWebView.BackColor = SystemColors.Menu;
             calendarWebView.CreationProperties = null;
             calendarWebView.DefaultBackgroundColor = Color.IndianRed;
             calendarWebView.Dock = DockStyle.Fill;
@@ -157,7 +171,7 @@
             calendarWebView.MinimumSize = new Size(800, 600);
             calendarWebView.Name = "calendarWebView";
             calendarWebView.Padding = new Padding(10);
-            calendarWebView.Size = new Size(959, 729);
+            calendarWebView.Size = new Size(1092, 820);
             calendarWebView.Source = new Uri("https://calendar.google.com/calendar/u/0/r", UriKind.Absolute);
             calendarWebView.TabIndex = 0;
             calendarWebView.ZoomFactor = 1D;
@@ -166,7 +180,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1008, 729);
+            ClientSize = new Size(1140, 820);
             Controls.Add(sidebarMenu);
             Controls.Add(homePanel);
             IsMdiContainer = true;
@@ -190,13 +204,14 @@
         private PictureBox menuButton;
         private FlowLayoutPanel sidebarMenu;
         private Panel panel2;
-        private Button btnNoAllowedApps;
+        private Button NoAllowedAppsControl;
         private Panel panel3;
-        private Button btnGoogleAccount;
+        private Button GoogleAccountControl;
         private Panel panel4;
-        private Button btnSettings;
+        private Button SettingsControl;
         private System.Windows.Forms.Timer sidebarMenuTimer;
         private Panel homePanel;
         private Microsoft.Web.WebView2.WinForms.WebView2 calendarWebView;
+        private Button returnControl;
     }
 }
