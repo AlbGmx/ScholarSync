@@ -36,7 +36,16 @@
             SetControl = new Button();
             SuspendLayout();
             // 
-            // label1
+            // dtpFromDate
+            // 
+            dtpFromDate.Location = new Point(284, 452);
+            dtpFromDate.MaxDate = new DateTime(2024, 5, 25, 0, 0, 0, 0);
+            dtpFromDate.Name = "dtpFromDate";
+            dtpFromDate.Size = new Size(200, 23);
+            dtpFromDate.TabIndex = 0;
+            dtpFromDate.Value = new DateTime(2024, 5, 25, 0, 0, 0, 0);
+            // 
+            // lblDateRangeDescription
             // 
             dtpFromDate.Location = new Point(284, 452);
             dtpFromDate.MaxDate = new DateTime(2024, 5, 25, 0, 0, 0, 0);

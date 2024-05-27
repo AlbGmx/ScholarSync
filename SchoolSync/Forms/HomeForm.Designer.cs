@@ -70,7 +70,7 @@
             // 
             // sidebarMenu
             // 
-            sidebarMenu.BackColor = Color.Transparent;
+            sidebarMenu.BackColor = Color.DarkGray;
             sidebarMenu.Controls.Add(menuButton);
             sidebarMenu.Controls.Add(panel2);
             sidebarMenu.Controls.Add(panel4);
@@ -148,7 +148,7 @@
             // 
             // homePanel
             // 
-            homePanel.BackColor = SystemColors.ActiveCaption;
+            homePanel.BackColor = Color.White;
             homePanel.Controls.Add(calendarWebView);
             homePanel.Location = new Point(50, 50);
             homePanel.Name = "homePanel";
@@ -267,11 +267,11 @@
         private PictureBox menuButton;
         private FlowLayoutPanel sidebarMenu;
         private Panel panel2;
-        private Button btnNoAllowedApps;
+        private Button NoAllowedAppsControl;
         private Panel panel3;
-        private Button btnGoogleAccount;
+        private Button GoogleAccountControl;
         private Panel panel4;
-        private Button btnSettings;
+        private Button SettingsControl;
         private System.Windows.Forms.Timer sidebarMenuTimer;
         private Panel homePanel;
         private Microsoft.Web.WebView2.WinForms.WebView2 calendarWebView;
@@ -280,9 +280,6 @@
         private Label LabelFromDate;
         private Label LabelUntilDateDescription;
         private Label LabelUntilDate;
-        private Button NoAllowedAppsControl;
-        private Button SettingsControl;
-        private Button GoogleAccountControl;
         private Button ReturnControl;
     }
 }
