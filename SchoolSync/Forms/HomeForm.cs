@@ -6,6 +6,9 @@ namespace SchoolSync
 {
     public partial class HomeForm : Form
     {
+        private SettingsData? settingsData;
+        public int? FromDate { get; set; }
+        public int? UntilDate { get; set; }
 
         private readonly UserCredential? userCredential;
         private readonly CalendarService? service;
@@ -19,13 +22,27 @@ namespace SchoolSync
         public HomeForm()
         {
             InitializeComponent();
+            LoadSettings();
             userCredential = GoogleAPI.GoogleAuth();
             service = GoogleAPI.CreateCalendarService(userCredential);
+            UpdateDaysCountLabels();
         }
 
-        private void HomeForm_Load(object? sender, EventArgs e)
+        private void LoadSettings()
         {
-            calendarWebView.Source = new Uri("https://calendar.google.com/calendar/");
+            settingsData = Utils.LoadSettings();
+            FromDate = settingsData.FromDate;
+            UntilDate = settingsData.UntilDate;
+        }
+
+        private void SaveSettings()
+        {
+            SettingsData dataToSave = new()
+            {
+                FromDate = FromDate,
+                UntilDate = UntilDate,
+            };
+            Utils.SaveSettings(dataToSave);
         }
 
         private void SidebarMenuTimer_Tick(object sender, EventArgs e)
@@ -33,7 +50,6 @@ namespace SchoolSync
             if (sidebarMenuExpanded == false)
             {
                 sidebarMenu.Width += 10;
-                homePanel.Location = new Point(sidebarMenu.Width, 0);
                 if (sidebarMenu.Width >= sidebarMenu.MaximumSize.Width)
                 {
                     sidebarMenuExpanded = true;
@@ -49,7 +65,7 @@ namespace SchoolSync
                     sidebarMenuTimer.Stop();
                 }
             }
-            homePanel.Location = new Point(sidebarMenu.Width, 0);
+            homePanel.Location = new Point(sidebarMenu.Width, homePanel.Location.Y);
         }
 
         private void MenuControl_Clicked(object sender, EventArgs e)
@@ -69,10 +85,10 @@ namespace SchoolSync
             homePanel.Controls.Add(blockedAppsForm);
             ShrinkSidebarMenu();
             blockedAppsForm.Show();
-            returnControl.Show();
+            ReturnControl.Show();
         }
 
-        private void SettingsControl_Clicked(object? sender, EventArgs e)
+        private void SettingsControl_Clicked(object sender, EventArgs e)
         {
             homePanel.Controls.Clear();
             settingsForm = new SettingsForm()
@@ -83,8 +99,9 @@ namespace SchoolSync
             };
             homePanel.Controls.Add(settingsForm);
             ShrinkSidebarMenu();
+            settingsForm.ReceiveData(FromDate, UntilDate);
             settingsForm.Show();
-            returnControl.Show();
+            ReturnControl.Show();
         }
 
         private void GoogleAccountControl_Clicked(object? sender, EventArgs e)
@@ -93,22 +110,30 @@ namespace SchoolSync
             googleAccountForm = new GoogleAccountForm()
             {
                 TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
+                MdiParent = this,
                 Dock = DockStyle.Fill,
             };
             homePanel.Controls.Add(googleAccountForm);
             ShrinkSidebarMenu();
             googleAccountForm.Show();
-            returnControl.Show();
+            ReturnControl.Show();
         }
 
-        private void HomeForm_SizeChanged(object? sender, EventArgs e)
+        private void ReturnControl_Clicked(object? sender, EventArgs e)
         {
-            homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
-        }
+            Control control = homePanel.Controls[0];
+            Type? currentFormType;
+            if (control is Form form)
+            {
+                currentFormType = form.GetType();
 
-        private void ReturnContol_Clicked(object? sender, EventArgs e)
-        {
+                if (currentFormType.Name == "SettingsForm")
+                {
+                    int[] dataArray = settingsForm.GetFormData();
+                    FromDate = dataArray[0];
+                    UntilDate = dataArray[1];
+                }
+            }
             homePanel.Controls.Clear();
             calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2()
             {
@@ -116,9 +141,28 @@ namespace SchoolSync
                 Source = new Uri("https://calendar.google.com/calendar/u/0/r"),
             };
             homePanel.Controls.Add(calendarWebView);
-            returnControl.Hide();
+            ReturnControl.Hide();
             calendarWebView.Show();
             ShrinkSidebarMenu();
+            UpdateDaysCountLabels();
+        }
+
+        private void UpdateDaysCountLabels()
+        {
+            if (FromDate != null && UntilDate != null)
+            {
+                LabelUntilDate.Text = UntilDate.ToString();
+                LabelUntilDate.ForeColor = Color.Black;
+                LabelFromDate.Text = FromDate.ToString();
+                LabelFromDate.ForeColor = Color.Black;
+            }
+            else
+            {
+                LabelUntilDate.Text = "0";
+                LabelUntilDate.ForeColor = Color.Red;
+                LabelFromDate.Text = "0";
+                LabelFromDate.ForeColor = Color.Red;
+            }
         }
 
         private void ShrinkSidebarMenu()
@@ -128,5 +172,16 @@ namespace SchoolSync
                 sidebarMenuTimer.Start();
             }
         }
+
+        private void HomeForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
+        }
+
+        private void HomeForm_SizeChanged(object? sender, EventArgs e)
+        {
+            homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
+        }
+
     }
 }

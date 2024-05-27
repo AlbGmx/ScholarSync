@@ -3,19 +3,21 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Newtonsoft.Json;
 
 namespace SchoolSync
 {
     internal class GoogleAPI
     {
         static readonly string[] Scopes = [CalendarService.Scope.CalendarReadonly];
+        private const string credentialsPath = "(\\..\\..\\..\\..\\..\\credentials.json";
 
         public static UserCredential GoogleAuth()
         {
             UserCredential credential;
-            using (var stream = new FileStream("..\\..\\..\\..\\credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
             {
-                string credPath = "token.json";
+                string credPath = "token.bin";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
@@ -49,7 +51,5 @@ namespace SchoolSync
 
             return service;
         }
-
-
     }
 }
