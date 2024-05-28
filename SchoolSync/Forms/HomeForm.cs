@@ -23,10 +23,10 @@ namespace SchoolSync
         public HomeForm()
         {
             InitializeComponent();
-            sidebarMenuExpanded = true;
             sidebarMenu.Width = sidebarMenu.MinimumSize.Width;
             userCredential = GoogleAPI.GoogleAuth();
             service = GoogleAPI.CreateCalendarService(userCredential);
+            LoadSettings();
             UpdateDaysCountLabels();
         }
 
@@ -102,6 +102,10 @@ namespace SchoolSync
             homePanel.Controls.Add(settingsForm);
             ShrinkSidebarMenu();
             settingsForm.ReceiveData(FromDate, UntilDate);
+            LabelFromDate.Hide();
+            LabelUntilDate.Hide();
+            LabelUntilDateDescription.Hide();
+            LabelFromDateDescription.Hide();
             settingsForm.Show();
             ReturnControl.Show();
         }
@@ -134,6 +138,10 @@ namespace SchoolSync
                     int[] dataArray = settingsForm.GetFormData();
                     FromDate = dataArray[0];
                     UntilDate = dataArray[1];
+                    LabelFromDate.Show();
+                    LabelUntilDate.Show();
+                    LabelUntilDateDescription.Show();
+                    LabelFromDateDescription.Show();
                 }
             }
             homePanel.Controls.Clear();
@@ -160,9 +168,9 @@ namespace SchoolSync
             }
             else
             {
-                LabelUntilDate.Text = "0";
+                LabelUntilDate.Text = SettingsForm.MINIMUM_DAY_DIFFERENCE.ToString();
                 LabelUntilDate.ForeColor = Color.Red;
-                LabelFromDate.Text = "0";
+                LabelFromDate.Text = SettingsForm.MINIMUM_DAY_DIFFERENCE.ToString();
                 LabelFromDate.ForeColor = Color.Red;
             }
         }
@@ -189,11 +197,6 @@ namespace SchoolSync
         {
             NotificationForm notification = new NotificationForm();
             notification.Show();
-        }
-
-        private void HomeForm_Load(object sender, EventArgs e)
-        {
-            LoadSettings();
         }
     }
 }

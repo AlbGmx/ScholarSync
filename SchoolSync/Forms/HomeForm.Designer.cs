@@ -41,7 +41,7 @@
             sidebarMenuTimer = new System.Windows.Forms.Timer(components);
             homePanel = new Panel();
             calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            DaysShownPanel = new TableLayoutPanel();
             LabelFromDateDescription = new Label();
             LabelFromDate = new Label();
             LabelUntilDateDescription = new Label();
@@ -50,7 +50,7 @@
             sidebarMenu.SuspendLayout();
             homePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)calendarWebView).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
+            DaysShownPanel.SuspendLayout();
             SuspendLayout();
             // 
             // menuButton
@@ -169,25 +169,25 @@
             calendarWebView.TabIndex = 0;
             calendarWebView.ZoomFactor = 1D;
             // 
-            // tableLayoutPanel1
+            // DaysShownPanel
             // 
-            tableLayoutPanel1.BackColor = SystemColors.Info;
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Controls.Add(LabelFromDateDescription, 0, 0);
-            tableLayoutPanel1.Controls.Add(LabelFromDate, 1, 0);
-            tableLayoutPanel1.Controls.Add(LabelUntilDateDescription, 2, 0);
-            tableLayoutPanel1.Controls.Add(LabelUntilDate, 3, 0);
-            tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(250, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(890, 50);
-            tableLayoutPanel1.TabIndex = 4;
+            DaysShownPanel.BackColor = Color.FromArgb(77, 134, 156);
+            DaysShownPanel.ColumnCount = 4;
+            DaysShownPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            DaysShownPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            DaysShownPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            DaysShownPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            DaysShownPanel.Controls.Add(LabelFromDateDescription, 0, 0);
+            DaysShownPanel.Controls.Add(LabelFromDate, 1, 0);
+            DaysShownPanel.Controls.Add(LabelUntilDateDescription, 2, 0);
+            DaysShownPanel.Controls.Add(LabelUntilDate, 3, 0);
+            DaysShownPanel.Dock = DockStyle.Top;
+            DaysShownPanel.Location = new Point(250, 0);
+            DaysShownPanel.Name = "DaysShownPanel";
+            DaysShownPanel.RowCount = 1;
+            DaysShownPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            DaysShownPanel.Size = new Size(890, 50);
+            DaysShownPanel.TabIndex = 4;
             // 
             // LabelFromDateDescription
             // 
@@ -239,7 +239,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1140, 820);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(DaysShownPanel);
             Controls.Add(sidebarMenu);
             Controls.Add(homePanel);
             IsMdiContainer = true;
@@ -247,14 +247,13 @@
             Name = "HomeForm";
             SizeGripStyle = SizeGripStyle.Show;
             FormClosing += HomeForm_FormClosing;
-            Load += HomeForm_Load;
             SizeChanged += HomeForm_SizeChanged;
             ((System.ComponentModel.ISupportInitialize)menuButton).EndInit();
             sidebarMenu.ResumeLayout(false);
             homePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)calendarWebView).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            DaysShownPanel.ResumeLayout(false);
+            DaysShownPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -270,7 +269,7 @@
         private System.Windows.Forms.Timer sidebarMenuTimer;
         private Panel homePanel;
         private Microsoft.Web.WebView2.WinForms.WebView2 calendarWebView;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel DaysShownPanel;
         private Label LabelFromDateDescription;
         private Label LabelFromDate;
         private Label LabelUntilDateDescription;
