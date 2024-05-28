@@ -40,15 +40,6 @@
             // 
             dtpFromDate.Location = new Point(284, 452);
             dtpFromDate.MaxDate = new DateTime(2024, 5, 25, 0, 0, 0, 0);
-            dtpFromDate.Name = "dtpFromDate";
-            dtpFromDate.Size = new Size(200, 23);
-            dtpFromDate.TabIndex = 0;
-            dtpFromDate.Value = new DateTime(2024, 5, 25, 0, 0, 0, 0);
-            // 
-            // lblDateRangeDescription
-            // 
-            dtpFromDate.Location = new Point(284, 452);
-            dtpFromDate.MaxDate = new DateTime(2024, 5, 25, 0, 0, 0, 0);
             dtpFromDate.MinDate = new DateTime(2021, 8, 29, 23, 11, 22, 629);
             dtpFromDate.Name = "dtpFromDate";
             dtpFromDate.Size = new Size(200, 23);
@@ -70,7 +61,7 @@
             // 
             lblDateRangeDescription.AutoSize = true;
             lblDateRangeDescription.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDateRangeDescription.Location = new Point(284, 218);
+            lblDateRangeDescription.Location = new Point(284, 214);
             lblDateRangeDescription.Name = "lblDateRangeDescription";
             lblDateRangeDescription.Size = new Size(723, 86);
             lblDateRangeDescription.TabIndex = 2;
