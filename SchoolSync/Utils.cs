@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SchoolSync.Forms;
 using System.Management;
 
 
@@ -15,7 +16,7 @@ namespace SchoolSync
         private static List<string> applicationList = new();
         private const string wmiQuery = "SELECT * FROM Win32_ProcessStartTrace";
         private const string filePath = "applicationsList.bin";
-        private const string settingsPath = "settings.bin";
+        private const string settingsPath = "../../../settings.bin";
 
 
         public static void processWatcher()
@@ -89,20 +90,28 @@ namespace SchoolSync
 
         public static SettingsData LoadSettings()
         {
-            if (File.Exists(settingsPath))
+            const int defaultDayDifference = SettingsForm.MINIMUM_DAY_DIFFERENCE;
+            SettingsData defaultData = new()
             {
-                string json = File.ReadAllText(settingsPath);
-                return JsonConvert.DeserializeObject<SettingsData>(json);
-            }
-            else
-            {
-                return new SettingsData()
-                {
-                    FromDate = 0,
-                    UntilDate = 0,
-                };
-            }
-        }
+                FromDate = defaultDayDifference,
+                UntilDate = defaultDayDifference,
+            };
 
+            if (!File.Exists(settingsPath))
+            {
+                MessageBox.Show("Settings file not found. Default settings will be used.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return defaultData;
+            }
+
+            string json = File.ReadAllText(settingsPath);
+            SettingsData data = JsonConvert.DeserializeObject<SettingsData>(json) ?? defaultData;
+
+            if (data == defaultData)
+            {
+                MessageBox.Show("Settings file is invalid. Default settings will be used.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            return data;
+        }
     }
 }

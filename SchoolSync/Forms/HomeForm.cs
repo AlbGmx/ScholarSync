@@ -11,8 +11,13 @@ namespace SchoolSync
         public int? FromDate { get; set; }
         public int? UntilDate { get; set; }
 
-        private readonly UserCredential? userCredential;
-        private readonly CalendarService? service;
+        private UserCredential? userCredential;
+        private CalendarService? service;
+
+        public const int MAX_DAYS = 999;
+        public const String SETTINGS_FORM = "SettingsForm";
+        public const String BLOCKED_APPS_FORM = "BlockedAppsForm";
+        public const String GOOGLE_ACCOUNT_FORM = "GoogleAccountForm";
 
         bool sidebarMenuExpanded = false;
 
@@ -23,10 +28,17 @@ namespace SchoolSync
         public HomeForm()
         {
             InitializeComponent();
+            sidebarMenu.Width = sidebarMenu.MinimumSize.Width;
+            InitializeGoogleAPI();
             LoadSettings();
-            userCredential = GoogleAPI.GoogleAuth();
-            service = GoogleAPI.CreateCalendarService(userCredential);
             UpdateDaysCountLabels();
+        }
+
+        private async void InitializeGoogleAPI()
+        {
+            userCredential = await GoogleAPI.GoogleAuth();
+            CalendarService auxService =  GoogleAPI.CreateCalendarService(userCredential);
+            service = auxService;
         }
 
         private void LoadSettings()
@@ -101,6 +113,10 @@ namespace SchoolSync
             homePanel.Controls.Add(settingsForm);
             ShrinkSidebarMenu();
             settingsForm.ReceiveData(FromDate, UntilDate);
+            LabelFromDate.Hide();
+            LabelUntilDate.Hide();
+            LabelUntilDateDescription.Hide();
+            LabelFromDateDescription.Hide();
             settingsForm.Show();
             ReturnControl.Show();
         }
@@ -115,6 +131,7 @@ namespace SchoolSync
                 Dock = DockStyle.Fill,
             };
             homePanel.Controls.Add(googleAccountForm);
+            googleAccountForm.SendCredential(userCredential);
             ShrinkSidebarMenu();
             googleAccountForm.Show();
             ReturnControl.Show();
@@ -122,19 +139,28 @@ namespace SchoolSync
 
         private void ReturnControl_Clicked(object? sender, EventArgs e)
         {
-            Control control = homePanel.Controls[0];
-            Type? currentFormType;
-            if (control is Form form)
-            {
-                currentFormType = form.GetType();
 
-                if (currentFormType.Name == "SettingsForm")
-                {
+            switch (GetFormIncontrol())
+            {
+                case SETTINGS_FORM:
                     int[] dataArray = settingsForm.GetFormData();
                     FromDate = dataArray[0];
                     UntilDate = dataArray[1];
-                }
+                    break;
+                case BLOCKED_APPS_FORM:
+                    break;
+                case GOOGLE_ACCOUNT_FORM:
+                    userCredential = googleAccountForm.GetCredential();
+                    break;
+                default:
+                    break;
             }
+            LabelFromDate.Show();
+            LabelUntilDate.Show();
+            LabelUntilDateDescription.Show();
+            LabelFromDateDescription.Show();
+
+
             homePanel.Controls.Clear();
             calendarWebView = new Microsoft.Web.WebView2.WinForms.WebView2()
             {
@@ -159,9 +185,9 @@ namespace SchoolSync
             }
             else
             {
-                LabelUntilDate.Text = "0";
+                LabelUntilDate.Text = SettingsForm.MINIMUM_DAY_DIFFERENCE.ToString();
                 LabelUntilDate.ForeColor = Color.Red;
-                LabelFromDate.Text = "0";
+                LabelFromDate.Text = SettingsForm.MINIMUM_DAY_DIFFERENCE.ToString();
                 LabelFromDate.ForeColor = Color.Red;
             }
         }
@@ -182,6 +208,27 @@ namespace SchoolSync
         private void HomeForm_SizeChanged(object? sender, EventArgs e)
         {
             homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
+            switch (GetFormIncontrol())
+            {
+                case "GoogleAccount":
+                    settingsForm.ReceiveData(FromDate, UntilDate);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        private String GetFormIncontrol()
+        {
+            Control control = homePanel.Controls[0];
+            Type? currentFormType;
+            if (control is Form form)
+            {
+                currentFormType = form.GetType();
+                return currentFormType.Name;
+            }
+            return "";
         }
 
         private void testNotificationBtn_Click(object sender, EventArgs e)
@@ -189,5 +236,7 @@ namespace SchoolSync
             NotificationForm notification = new NotificationForm();
             notification.Show();
         }
+
+
     }
 }

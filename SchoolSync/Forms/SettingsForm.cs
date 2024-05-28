@@ -4,10 +4,18 @@
     {
         public int? FromDate { get; set; }
         public int? UntilDate { get; set; }
+        public const int MINIMUM_DAY_DIFFERENCE = 2;
+        public const int MAXIMUM_DAY_DIFFERENCE = 999;
 
         public SettingsForm()
         {
             InitializeComponent();
+            //Initialize ranges
+            dtpFromDate.MinDate = DateTime.Today.AddDays(-MAXIMUM_DAY_DIFFERENCE);
+            dtpFromDate.MaxDate = DateTime.Today.AddDays(-MINIMUM_DAY_DIFFERENCE);
+            dtpUntilDate.MinDate = DateTime.Today.AddDays(MINIMUM_DAY_DIFFERENCE);
+            dtpUntilDate.MaxDate = DateTime.Today.AddDays(MAXIMUM_DAY_DIFFERENCE);
+
         }
 
         private void UpdateDaysTextboxes()
@@ -18,14 +26,15 @@
 
         public void ReceiveData(int? fromDate, int? untilDate)
         {
-            FromDate = fromDate ?? 0;
-            UntilDate = untilDate ?? 0;
+            // if not initialized, set to minimum
+            FromDate = fromDate ?? MINIMUM_DAY_DIFFERENCE;
+            UntilDate = untilDate ?? MINIMUM_DAY_DIFFERENCE;
             UpdateDaysTextboxes();
         }
 
         public int[] GetFormData()
         {
-            int[] data = new int[] { FromDate ?? 0, UntilDate ?? 0 };
+            int[] data = new int[] { FromDate ?? MINIMUM_DAY_DIFFERENCE, UntilDate ?? MINIMUM_DAY_DIFFERENCE };
             return data;
         }
 
@@ -72,8 +81,12 @@
         private void TextBoxFromDate_TextChanged(object? sender, EventArgs e)
         {
             if (int.TryParse(tBoxFromDate.Text, out int daysDifference))
-            {
-                dtpFromDate.Value = DateTime.Today.AddDays(-daysDifference);
+            { 
+                if (daysDifference < MINIMUM_DAY_DIFFERENCE)
+                {
+                    daysDifference = MINIMUM_DAY_DIFFERENCE;
+                    dtpFromDate.Value = DateTime.Today.AddDays(-daysDifference);
+                }
             }
         }
 
@@ -87,8 +100,8 @@
 
         private void SetControl_Click(object sender, EventArgs e)
         {
-            FromDate = int.TryParse(tBoxFromDate.Text, out int fromDate) ? fromDate : 0;
-            UntilDate = int.TryParse(tBoxUntilDate.Text, out int untilDate) ? untilDate : 0;
+            FromDate = int.TryParse(tBoxFromDate.Text, out int fromDate) ? fromDate : MINIMUM_DAY_DIFFERENCE;
+            UntilDate = int.TryParse(tBoxUntilDate.Text, out int untilDate) ? untilDate : MINIMUM_DAY_DIFFERENCE;
         }
     }
 }
