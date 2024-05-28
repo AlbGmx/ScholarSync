@@ -33,11 +33,10 @@
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             menuButton = new PictureBox();
             sidebarMenu = new FlowLayoutPanel();
-            panel2 = new Panel();
             NoAllowedAppsControl = new Button();
-            panel4 = new Panel();
             SettingsControl = new Button();
             GoogleAccountControl = new Button();
+            testNotificationBtn = new Button();
             ReturnControl = new Button();
             sidebarMenuTimer = new System.Windows.Forms.Timer(components);
             homePanel = new Panel();
@@ -49,8 +48,6 @@
             LabelUntilDate = new Label();
             ((System.ComponentModel.ISupportInitialize)menuButton).BeginInit();
             sidebarMenu.SuspendLayout();
-            panel2.SuspendLayout();
-            panel4.SuspendLayout();
             homePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)calendarWebView).BeginInit();
             tableLayoutPanel1.SuspendLayout();
@@ -70,74 +67,74 @@
             // 
             // sidebarMenu
             // 
-            sidebarMenu.BackColor = Color.DarkGray;
+            sidebarMenu.BackColor = Color.FromArgb(77, 134, 156);
             sidebarMenu.Controls.Add(menuButton);
-            sidebarMenu.Controls.Add(panel2);
-            sidebarMenu.Controls.Add(panel4);
+            sidebarMenu.Controls.Add(NoAllowedAppsControl);
+            sidebarMenu.Controls.Add(SettingsControl);
             sidebarMenu.Controls.Add(GoogleAccountControl);
+            sidebarMenu.Controls.Add(testNotificationBtn);
             sidebarMenu.Controls.Add(ReturnControl);
             sidebarMenu.Dock = DockStyle.Left;
             sidebarMenu.Location = new Point(0, 0);
             sidebarMenu.MaximumSize = new Size(250, 0);
             sidebarMenu.MinimumSize = new Size(50, 0);
             sidebarMenu.Name = "sidebarMenu";
-            sidebarMenu.Size = new Size(50, 820);
+            sidebarMenu.Size = new Size(250, 820);
             sidebarMenu.TabIndex = 5;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(NoAllowedAppsControl);
-            panel2.Location = new Point(3, 49);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(250, 60);
-            panel2.TabIndex = 3;
             // 
             // NoAllowedAppsControl
             // 
-            NoAllowedAppsControl.Location = new Point(-5, -5);
+            NoAllowedAppsControl.BackColor = Color.FromArgb(205, 232, 229);
+            NoAllowedAppsControl.Location = new Point(3, 49);
             NoAllowedAppsControl.Name = "NoAllowedAppsControl";
-            NoAllowedAppsControl.Size = new Size(260, 70);
+            NoAllowedAppsControl.Size = new Size(245, 70);
             NoAllowedAppsControl.TabIndex = 4;
             NoAllowedAppsControl.Text = "No Allowed Apps";
-            NoAllowedAppsControl.UseVisualStyleBackColor = true;
+            NoAllowedAppsControl.UseVisualStyleBackColor = false;
             NoAllowedAppsControl.Click += NoAllowedAppsControl_Clicked;
-            // 
-            // panel4
-            // 
-            panel4.Controls.Add(SettingsControl);
-            panel4.Location = new Point(3, 115);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(250, 60);
-            panel4.TabIndex = 5;
             // 
             // SettingsControl
             // 
-            SettingsControl.Location = new Point(-5, -5);
+            SettingsControl.BackColor = Color.FromArgb(205, 232, 229);
+            SettingsControl.Location = new Point(3, 125);
             SettingsControl.Name = "SettingsControl";
-            SettingsControl.Size = new Size(260, 70);
+            SettingsControl.Size = new Size(245, 70);
             SettingsControl.TabIndex = 4;
             SettingsControl.Text = "Settings";
-            SettingsControl.UseVisualStyleBackColor = true;
+            SettingsControl.UseVisualStyleBackColor = false;
             SettingsControl.Click += SettingsControl_Clicked;
             // 
             // GoogleAccountControl
             // 
-            GoogleAccountControl.Location = new Point(3, 181);
+            GoogleAccountControl.BackColor = Color.FromArgb(205, 232, 229);
+            GoogleAccountControl.Location = new Point(3, 201);
             GoogleAccountControl.Name = "GoogleAccountControl";
-            GoogleAccountControl.Size = new Size(260, 70);
+            GoogleAccountControl.Size = new Size(245, 70);
             GoogleAccountControl.TabIndex = 5;
             GoogleAccountControl.Text = "Google Account";
-            GoogleAccountControl.UseVisualStyleBackColor = true;
+            GoogleAccountControl.UseVisualStyleBackColor = false;
             GoogleAccountControl.Click += GoogleAccountControl_Clicked;
+            // 
+            // testNotificationBtn
+            // 
+            testNotificationBtn.BackColor = Color.FromArgb(205, 232, 229);
+            testNotificationBtn.Location = new Point(3, 277);
+            testNotificationBtn.Name = "testNotificationBtn";
+            testNotificationBtn.Size = new Size(245, 70);
+            testNotificationBtn.TabIndex = 7;
+            testNotificationBtn.Text = "Test Notification";
+            testNotificationBtn.UseVisualStyleBackColor = false;
+            testNotificationBtn.Click += testNotificationBtn_Click;
             // 
             // ReturnControl
             // 
-            ReturnControl.Location = new Point(3, 257);
+            ReturnControl.BackColor = Color.FromArgb(205, 232, 229);
+            ReturnControl.Location = new Point(3, 353);
             ReturnControl.Name = "ReturnControl";
-            ReturnControl.Size = new Size(260, 70);
+            ReturnControl.Size = new Size(245, 70);
             ReturnControl.TabIndex = 6;
             ReturnControl.Text = "Return";
-            ReturnControl.UseVisualStyleBackColor = true;
+            ReturnControl.UseVisualStyleBackColor = false;
             ReturnControl.Visible = false;
             ReturnControl.Click += ReturnControl_Clicked;
             // 
@@ -185,11 +182,11 @@
             tableLayoutPanel1.Controls.Add(LabelUntilDateDescription, 2, 0);
             tableLayoutPanel1.Controls.Add(LabelUntilDate, 3, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(50, 0);
+            tableLayoutPanel1.Location = new Point(250, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1090, 50);
+            tableLayoutPanel1.Size = new Size(890, 50);
             tableLayoutPanel1.TabIndex = 4;
             // 
             // LabelFromDateDescription
@@ -198,7 +195,7 @@
             LabelFromDateDescription.Dock = DockStyle.Fill;
             LabelFromDateDescription.Location = new Point(3, 0);
             LabelFromDateDescription.Name = "LabelFromDateDescription";
-            LabelFromDateDescription.Size = new Size(266, 50);
+            LabelFromDateDescription.Size = new Size(216, 50);
             LabelFromDateDescription.TabIndex = 0;
             LabelFromDateDescription.Text = "Days to Count Backwards";
             LabelFromDateDescription.TextAlign = ContentAlignment.MiddleRight;
@@ -207,9 +204,9 @@
             // 
             LabelFromDate.AutoSize = true;
             LabelFromDate.Dock = DockStyle.Fill;
-            LabelFromDate.Location = new Point(275, 0);
+            LabelFromDate.Location = new Point(225, 0);
             LabelFromDate.Name = "LabelFromDate";
-            LabelFromDate.Size = new Size(266, 50);
+            LabelFromDate.Size = new Size(216, 50);
             LabelFromDate.TabIndex = 1;
             LabelFromDate.Text = "0";
             LabelFromDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -218,9 +215,9 @@
             // 
             LabelUntilDateDescription.AutoSize = true;
             LabelUntilDateDescription.Dock = DockStyle.Fill;
-            LabelUntilDateDescription.Location = new Point(547, 0);
+            LabelUntilDateDescription.Location = new Point(447, 0);
             LabelUntilDateDescription.Name = "LabelUntilDateDescription";
-            LabelUntilDateDescription.Size = new Size(266, 50);
+            LabelUntilDateDescription.Size = new Size(216, 50);
             LabelUntilDateDescription.TabIndex = 2;
             LabelUntilDateDescription.Text = "Days to Count Forward";
             LabelUntilDateDescription.TextAlign = ContentAlignment.MiddleRight;
@@ -229,9 +226,9 @@
             // 
             LabelUntilDate.AutoSize = true;
             LabelUntilDate.Dock = DockStyle.Fill;
-            LabelUntilDate.Location = new Point(819, 0);
+            LabelUntilDate.Location = new Point(669, 0);
             LabelUntilDate.Name = "LabelUntilDate";
-            LabelUntilDate.Size = new Size(268, 50);
+            LabelUntilDate.Size = new Size(218, 50);
             LabelUntilDate.TabIndex = 3;
             LabelUntilDate.Text = "0";
             LabelUntilDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -240,6 +237,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(1140, 820);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(sidebarMenu);
@@ -252,8 +250,6 @@
             SizeChanged += HomeForm_SizeChanged;
             ((System.ComponentModel.ISupportInitialize)menuButton).EndInit();
             sidebarMenu.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel4.ResumeLayout(false);
             homePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)calendarWebView).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
@@ -266,11 +262,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private PictureBox menuButton;
         private FlowLayoutPanel sidebarMenu;
-        private Panel panel2;
         private Button NoAllowedAppsControl;
         private Panel panel3;
         private Button GoogleAccountControl;
-        private Panel panel4;
         private Button SettingsControl;
         private System.Windows.Forms.Timer sidebarMenuTimer;
         private Panel homePanel;
@@ -281,5 +275,6 @@
         private Label LabelUntilDateDescription;
         private Label LabelUntilDate;
         private Button ReturnControl;
+        private Button testNotificationBtn;
     }
 }

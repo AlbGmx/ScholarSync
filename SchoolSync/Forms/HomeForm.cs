@@ -1,5 +1,6 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
+using ScholarSync.Forms;
 using SchoolSync.Forms;
 
 namespace SchoolSync
@@ -183,5 +184,10 @@ namespace SchoolSync
             homePanel.Size = new Size(Width - sidebarMenu.Width, Height);
         }
 
+        private void testNotificationBtn_Click(object sender, EventArgs e)
+        {
+            NotificationForm notification = new NotificationForm();
+            notification.Show();
+        }
     }
 }
