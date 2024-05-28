@@ -156,6 +156,7 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            this.ShowInTaskbar = false;
         }
 
         #endregion
