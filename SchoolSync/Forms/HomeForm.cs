@@ -23,7 +23,8 @@ namespace SchoolSync
         public HomeForm()
         {
             InitializeComponent();
-            LoadSettings();
+            sidebarMenuExpanded = true;
+            sidebarMenu.Width = sidebarMenu.MinimumSize.Width;
             userCredential = GoogleAPI.GoogleAuth();
             service = GoogleAPI.CreateCalendarService(userCredential);
             UpdateDaysCountLabels();
@@ -188,6 +189,11 @@ namespace SchoolSync
         {
             NotificationForm notification = new NotificationForm();
             notification.Show();
+        }
+
+        private void HomeForm_Load(object sender, EventArgs e)
+        {
+            LoadSettings();
         }
     }
 }

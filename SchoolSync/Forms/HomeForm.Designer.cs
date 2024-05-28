@@ -247,6 +247,7 @@
             Name = "HomeForm";
             SizeGripStyle = SizeGripStyle.Show;
             FormClosing += HomeForm_FormClosing;
+            Load += HomeForm_Load;
             SizeChanged += HomeForm_SizeChanged;
             ((System.ComponentModel.ISupportInitialize)menuButton).EndInit();
             sidebarMenu.ResumeLayout(false);

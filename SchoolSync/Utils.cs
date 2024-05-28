@@ -94,14 +94,11 @@ namespace SchoolSync
                 string json = File.ReadAllText(settingsPath);
                 return JsonConvert.DeserializeObject<SettingsData>(json);
             }
-            else
+            return new SettingsData()
             {
-                return new SettingsData()
-                {
-                    FromDate = 0,
-                    UntilDate = 0,
-                };
-            }
+                FromDate = 0,
+                UntilDate = 0,
+            };
         }
 
     }
