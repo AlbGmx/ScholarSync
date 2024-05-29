@@ -1,4 +1,7 @@
-﻿namespace ScholarSync.Forms
+﻿using Google.Apis.Calendar.v3.Data;
+using System;
+
+namespace ScholarSync.Forms
 {
     partial class NotificationForm
     {
@@ -31,17 +34,10 @@
             components = new System.ComponentModel.Container();
             snoozeLabel = new Button();
             dismissLabel = new Button();
-            panel1 = new Panel();
-            timeLeftLabel = new Label();
-            dueToLabel = new Label();
-            pictureBox1 = new PictureBox();
-            courseLabel = new Label();
-            assignmentLabel = new Label();
             snoozeTimer = new System.Windows.Forms.Timer(components);
             showTimer = new System.Windows.Forms.Timer(components);
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+
             // 
             // snoozeLabel
             // 
@@ -63,71 +59,6 @@
             dismissLabel.UseVisualStyleBackColor = true;
             dismissLabel.Click += dismissLabel_Click;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.FromArgb(205, 232, 229);
-            panel1.Controls.Add(timeLeftLabel);
-            panel1.Controls.Add(dueToLabel);
-            panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(courseLabel);
-            panel1.Controls.Add(assignmentLabel);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(300, 80);
-            panel1.TabIndex = 2;
-            panel1.Paint += panel1_Paint;
-            // 
-            // timeLeftLabel
-            // 
-            timeLeftLabel.AutoSize = true;
-            timeLeftLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            timeLeftLabel.Location = new Point(184, 55);
-            timeLeftLabel.Name = "timeLeftLabel";
-            timeLeftLabel.Size = new Size(104, 17);
-            timeLeftLabel.TabIndex = 4;
-            timeLeftLabel.Text = "Time Left: 15 hrs";
-            // 
-            // dueToLabel
-            // 
-            dueToLabel.AutoSize = true;
-            dueToLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dueToLabel.Location = new Point(53, 55);
-            dueToLabel.Name = "dueToLabel";
-            dueToLabel.Size = new Size(91, 17);
-            dueToLabel.TabIndex = 3;
-            dueToLabel.Text = "Due to: XX/XX";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.assignment;
-            pictureBox1.Location = new Point(7, 7);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 40);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            // 
-            // courseLabel
-            // 
-            courseLabel.AutoSize = true;
-            courseLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            courseLabel.Location = new Point(53, 26);
-            courseLabel.Name = "courseLabel";
-            courseLabel.Size = new Size(59, 21);
-            courseLabel.TabIndex = 1;
-            courseLabel.Text = "Course";
-            // 
-            // assignmentLabel
-            // 
-            assignmentLabel.AutoSize = true;
-            assignmentLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            assignmentLabel.Location = new Point(53, 5);
-            assignmentLabel.Name = "assignmentLabel";
-            assignmentLabel.Size = new Size(100, 21);
-            assignmentLabel.TabIndex = 0;
-            assignmentLabel.Text = "Assignment";
-            // 
             // snoozeTimer
             // 
             snoozeTimer.Interval = 6000;
@@ -145,16 +76,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(77, 134, 156);
             ClientSize = new Size(300, 120);
-            Controls.Add(panel1);
             Controls.Add(dismissLabel);
             Controls.Add(snoozeLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "NotificationForm";
             Text = "NotificationForm";
             Load += NotificationForm_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             this.ShowInTaskbar = false;
         }
@@ -163,13 +90,95 @@
 
         private Button snoozeLabel;
         private Button dismissLabel;
-        private Panel panel1;
-        private Label assignmentLabel;
-        private PictureBox pictureBox1;
-        private Label courseLabel;
-        private Label timeLeftLabel;
-        private Label dueToLabel;
         private System.Windows.Forms.Timer snoozeTimer;
         private System.Windows.Forms.Timer showTimer;
+
+        private int panelHeight = 80;
+        private int panelWidth = 300;
+        private int spacing = 5;
+
+        private Events events;
+
+        public NotificationForm(Events events)
+        {
+            this.events = events;
+            InitializeComponent();
+            AddNotificationPanel(events);
+        }
+
+        private void AddNotificationPanel(Events events)
+        {
+            for (int i = 0; i < events.Items.Count; i++)
+            {
+                Panel eventPanel = new Panel()
+                {
+                    BackColor = Color.FromArgb(205, 232, 229),
+                    Size = new Size(panelWidth, panelHeight),
+                    Location = new Point(0, (panelHeight + spacing) * i),
+                    Name = "panel" + i,
+                };
+
+                Label assignmentLabel = new Label()
+                {
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0),
+                    Location = new Point(53, 5),
+                    Name = "assigmentLabel" + i,
+                    Text = events.Items[i].Summary,
+                };
+
+                Label courseLabel = new Label()
+                {
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                    Location = new Point(53, 26),
+                    Name = "courseLabel" + i,
+                    Text = events.Items[i].Summary,
+                };
+
+                DateTime dateTime = (events.Items[i].Start.DateTime.HasValue) ? (events.Items[i].Start.DateTime.Value) : (DateTime.Parse(events.Items[i].Start.Date));
+
+                Label dueToLabel = new Label()
+                {
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                    Location = new Point(53, 55),
+                    Name = "dueToLabel" + i,
+                    Text = "Due to " + dateTime.ToString("MMMM dd"),
+                };
+
+                TimeSpan timeLeft = dateTime - DateTime.Today;
+
+                Label timeLeftLabel = new Label()
+                {
+                    AutoSize = true,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                    Location = new Point(175, 55),
+                    Name = "timeLeftLabel" + i,
+                    Text = "Time Left: " + timeLeft.Days + " Days",
+                };
+
+                PictureBox pictureBox = new PictureBox()
+                {
+                    Image = Properties.Resources.assignment,
+                    Location = new Point(7, 7),
+                    Name = "pictureBox" + i,
+                    Size = new Size(40, 40),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+
+                eventPanel.Controls.Add(assignmentLabel);
+                eventPanel.Controls.Add(courseLabel);
+                eventPanel.Controls.Add(dueToLabel);
+                eventPanel.Controls.Add(timeLeftLabel);
+                eventPanel.Controls.Add(pictureBox);
+
+                Controls.Add(eventPanel);
+            }
+
+            this.ClientSize = new Size(300, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 40);
+            snoozeLabel.Location = new Point(132, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10);
+            dismissLabel.Location = new Point(213, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10);
+        }
     }
 }
