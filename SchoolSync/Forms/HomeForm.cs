@@ -1,5 +1,6 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
 using ScholarSync.Forms;
 using SchoolSync.Forms;
 
@@ -19,6 +20,8 @@ namespace SchoolSync
         public const String BLOCKED_APPS_FORM = "BlockedAppsForm";
         public const String GOOGLE_ACCOUNT_FORM = "GoogleAccountForm";
 
+        private Events events;
+
         bool sidebarMenuExpanded = false;
 
         BlockedAppsForm? blockedAppsForm;
@@ -32,6 +35,7 @@ namespace SchoolSync
             InitializeGoogleAPI();
             LoadSettings();
             UpdateDaysCountLabels();
+            CalendarService service = GoogleAPI.CreateCalendarService(userCredential);
         }
 
         private async void InitializeGoogleAPI()
@@ -233,7 +237,8 @@ namespace SchoolSync
 
         private void testNotificationBtn_Click(object sender, EventArgs e)
         {
-            NotificationForm notification = new NotificationForm();
+            Events events = GoogleAPI.GetEvents(service, 10, 10);
+            NotificationForm notification = new NotificationForm(events);
             notification.Show();
         }
 
