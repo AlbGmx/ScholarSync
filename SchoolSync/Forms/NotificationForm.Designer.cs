@@ -37,7 +37,6 @@ namespace ScholarSync.Forms
             snoozeTimer = new System.Windows.Forms.Timer(components);
             showTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
-
             // 
             // snoozeLabel
             // 
@@ -80,10 +79,10 @@ namespace ScholarSync.Forms
             Controls.Add(snoozeLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "NotificationForm";
+            ShowInTaskbar = false;
             Text = "NotificationForm";
             Load += NotificationForm_Load;
             ResumeLayout(false);
-            this.ShowInTaskbar = false;
         }
 
         #endregion
@@ -95,15 +94,76 @@ namespace ScholarSync.Forms
 
         private int panelHeight = 80;
         private int panelWidth = 300;
+        private int warningPanel = 0;
         private int spacing = 5;
 
         private Events events;
+        private string noAllowedApp;
 
         public NotificationForm(Events events)
         {
             this.events = events;
             InitializeComponent();
             AddNotificationPanel(events);
+            this.TopMost = true;
+        }
+
+        public NotificationForm(Events events, string noAllowedApp)
+        {
+            warningPanel = 105;
+            this.events = events;
+            this.noAllowedApp = noAllowedApp;
+            InitializeComponent();
+            AddNotAllowedPanel(noAllowedApp);
+            AddNotificationPanel(events);
+            this.TopMost = true;
+            
+        }
+
+        private void AddNotAllowedPanel(string noAllowedApp)
+        {
+            Panel eventPanel = new Panel()
+            {
+                BackColor = Color.FromArgb(205, 232, 229),
+                Size = new Size(panelWidth, panelHeight + 20),
+                Name = "warningPanel",
+                Location = new Point(0, 0),
+            };
+
+            Label warningLabel = new Label()
+            {
+                AutoSize = true,
+                MaximumSize = new Size(240, 0),
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0),
+                Location = new Point(53, 5),
+                Name = "warningLabel",
+                Text = "Aun tienes tareas pendientes!",
+            };
+
+            Label infoLabel = new Label()
+            {
+                AutoSize = true,
+                MaximumSize = new Size(240, 0),
+                Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                Location = new Point(53, 5),
+                Name = "infoLabel",
+                Text = "\nHas abierto una aplicacion que tienes en tu lista, piensa.\n" + noAllowedApp,
+            };
+
+            PictureBox pictureBox = new PictureBox()
+            {
+                Image = Properties.Resources.warning,
+                Location = new Point(7, 7),
+                Size = new Size(40, 40),
+                Name = "warningPicture",
+                SizeMode = PictureBoxSizeMode.StretchImage,
+            };
+
+            eventPanel.Controls.Add(warningLabel);
+            eventPanel.Controls.Add(infoLabel);
+            eventPanel.Controls.Add(pictureBox);
+
+            Controls.Add(eventPanel);
         }
 
         private void AddNotificationPanel(Events events)
@@ -114,7 +174,7 @@ namespace ScholarSync.Forms
                 {
                     BackColor = Color.FromArgb(205, 232, 229),
                     Size = new Size(panelWidth, panelHeight),
-                    Location = new Point(0, (panelHeight + spacing) * i),
+                    Location = new Point(0, ((panelHeight + spacing) * i) + warningPanel),
                     Name = "panel" + i,
                 };
 
@@ -176,9 +236,9 @@ namespace ScholarSync.Forms
                 Controls.Add(eventPanel);
             }
 
-            this.ClientSize = new Size(300, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 40);
-            snoozeLabel.Location = new Point(132, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10);
-            dismissLabel.Location = new Point(213, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10);
+            this.ClientSize = new Size(300, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 40 + warningPanel);
+            snoozeLabel.Location = new Point(132, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10 + warningPanel);
+            dismissLabel.Location = new Point(213, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10 + warningPanel);
         }
     }
 }

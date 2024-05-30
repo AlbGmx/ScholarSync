@@ -12,6 +12,10 @@ namespace SchoolSync
         public int? FromDate { get; set; }
         public int? UntilDate { get; set; }
 
+        public static bool? notAllowedApp { get; set; }
+        public static string? notAllowedAppName { get; set; }
+
+
         private UserCredential? userCredential;
         private CalendarService? service;
 
@@ -28,6 +32,7 @@ namespace SchoolSync
         SettingsForm? settingsForm;
         GoogleAccountForm? googleAccountForm;
 
+
         public HomeForm()
         {
             InitializeComponent();
@@ -35,13 +40,13 @@ namespace SchoolSync
             InitializeGoogleAPI();
             LoadSettings();
             UpdateDaysCountLabels();
-            CalendarService service = GoogleAPI.CreateCalendarService(userCredential);
+            Utils.InitWatcher();
         }
 
         private async void InitializeGoogleAPI()
         {
             userCredential = await GoogleAPI.GoogleAuth();
-            CalendarService auxService =  GoogleAPI.CreateCalendarService(userCredential);
+            CalendarService auxService = GoogleAPI.CreateCalendarService(userCredential);
             service = auxService;
         }
 
@@ -235,13 +240,33 @@ namespace SchoolSync
             return "";
         }
 
-        private void testNotificationBtn_Click(object sender, EventArgs e)
+        private void displayNotification()
         {
             Events events = GoogleAPI.GetEvents(service, 10, 10);
             NotificationForm notification = new NotificationForm(events);
             notification.Show();
         }
 
+        private void displayNotification(string noAllowedApp)
+        {
+            Events events = GoogleAPI.GetEvents(service, 10, 10);
+            NotificationForm notification = new NotificationForm(events, noAllowedApp);
+            notification.Show();
+        }
 
+        private void notificationTimer_Tick(object sender, EventArgs e)
+        {
+            displayNotification();
+            notificationTimer.Stop();
+        }
+
+        private void appChekcer_Tick(object sender, EventArgs e)
+        {
+            if (notAllowedApp ?? false)
+            { 
+                displayNotification(notAllowedAppName);
+                notAllowedApp = false;
+            }
+        }
     }
 }

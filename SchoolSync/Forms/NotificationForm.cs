@@ -18,6 +18,8 @@ namespace ScholarSync.Forms
         int offsetX = 10;
         int offsetY = 20;
 
+        private static Form currentForm;
+
         public NotificationForm()
         {
             InitializeComponent();
@@ -42,12 +44,19 @@ namespace ScholarSync.Forms
 
         private void NotificationForm_Load(object sender, EventArgs e)
         {
+            if (currentForm != null)
+            {
+                currentForm.Close();
+            }
+
+            currentForm = this;
+            currentForm.FormClosed += (sender, e) => currentForm = null;
             Position();
         }
 
         private void dismissLabel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void snoozeTimer_Tick(object sender, EventArgs e)
@@ -68,7 +77,7 @@ namespace ScholarSync.Forms
         {
             notificacionY -= 10;
             this.Location = new Point(notificacionX, notificacionY);
-            if(notificacionY <= finalNotificationY)
+            if (notificacionY <= finalNotificationY)
             {
                 showTimer.Stop();
             }
