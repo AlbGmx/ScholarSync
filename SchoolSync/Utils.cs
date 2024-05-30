@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SchoolSync.Forms;
 using System.Management;
-
+using System.Timers;
 
 namespace SchoolSync
 {
@@ -13,27 +13,71 @@ namespace SchoolSync
 
     internal class Utils
     {
-        private static List<string> applicationList = new();
+        //private static List<string> applicationList = new();
+        private static Dictionary<string, int> appList = new();
         private const string wmiQuery = "SELECT * FROM Win32_ProcessStartTrace";
         private const string filePath = "applicationsList.bin";
         private const string settingsPath = "../../../settings.bin";
 
+        public event EventHandler appInList;
+        private static System.Timers.Timer timer;
 
-        public static void processWatcher()
+
+        public static void InitWatcher()
         {
-            ManagementEventWatcher watcher = new ManagementEventWatcher(wmiQuery);
+            appList = LoadApplicationList(filePath);
+            ProcessWatcher();
+            AppTimer();
+        }
+
+        public static void ProcessWatcher()
+        {
+            ManagementEventWatcher watcher = new (wmiQuery);
             watcher.EventArrived += new EventArrivedEventHandler(ProcessStarted);
+            watcher.Start();
         }
 
         static void ProcessStarted(object sender, EventArrivedEventArgs e)
         {
             string processName = e.NewEvent.Properties["ProcessName"].Value.ToString();
             uint processId = (uint)e.NewEvent.Properties["ProcessId"].Value;
+            ProcessChecker(processName);
+        }
+
+        static void ProcessChecker(string processName)
+        {
+            processName = processName.ToLower();
+            if (appList.ContainsKey(processName) && appList[processName] == 0)
+            {
+                HomeForm.notAllowedApp = true;
+                HomeForm.notAllowedAppName = processName;
+                appList[processName] = 2;
+            }
+        }
+
+        private static void AppTimer()
+        {
+            timer = new(60000);
+            timer.Elapsed += OnTimedEvent;
+            timer.AutoReset = true;
+            timer.Start();
+        }
+
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            foreach (KeyValuePair<string, int> kvp in appList)
+            {
+                if (kvp.Value > 0) 
+                {
+                    appList[kvp.Key]--;
+                }
+            }
+
         }
 
         public static void AddApplicationList()
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            using (OpenFileDialog ofd = new ())
             {
                 ofd.Filter = "Executable Files (*.exe)|*.exe|All Files (*.*)|*.*";
                 ofd.Title = "Select an Application";
@@ -41,45 +85,46 @@ namespace SchoolSync
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string appName = Path.GetFileName(ofd.FileName);
-                    if (!applicationList.Contains(appName))
+                    string appName = Path.GetFileName(ofd.FileName).ToLower();
+                    if (!appList.ContainsKey(appName))
                     {
-                        applicationList.Add(appName);
-                        SaveApplicationList(applicationList, filePath);
+                        appList.Add(appName, 0);
+                        SaveApplicationList(appList, filePath);
                     }
                 }
             }
         }
 
-        public static void SaveApplicationList(List<string> applicationList, string filePath)
+        public static void SaveApplicationList(Dictionary<string, int> appList, string filePath)
         {
-            try
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
-                File.WriteAllLines(filePath, applicationList);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error saving application list: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                foreach (var kvp in appList)
+                {
+                    writer.WriteLine($"{kvp.Key},{kvp.Value}");
+                }
             }
         }
 
-        public static List<string> LoadApplicationList(string filePath)
+        public static Dictionary<string, int> LoadApplicationList(string filePath)
         {
-            List<string> applicationList = new List<string>();
+            Dictionary<string, int> appList = new();
 
-            try
+            if (File.Exists(filePath))
             {
-                if (File.Exists(filePath))
+                using (StreamReader reader = new StreamReader(filePath))
                 {
-                    applicationList.AddRange(File.ReadAllLines(filePath));
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var parts = line.Split(',');
+                        string key = parts[0];
+                        int value = int.Parse(parts[1]);
+                        appList[key] = value;
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading application list: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            return applicationList;
+            return appList;
         }
 
         public static void SaveSettings(SettingsData data)

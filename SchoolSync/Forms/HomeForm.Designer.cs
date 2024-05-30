@@ -36,7 +36,6 @@
             NoAllowedAppsControl = new Button();
             SettingsControl = new Button();
             GoogleAccountControl = new Button();
-            testNotificationBtn = new Button();
             ReturnControl = new Button();
             sidebarMenuTimer = new System.Windows.Forms.Timer(components);
             homePanel = new Panel();
@@ -46,6 +45,8 @@
             LabelFromDate = new Label();
             LabelUntilDateDescription = new Label();
             LabelUntilDate = new Label();
+            notificationTimer = new System.Windows.Forms.Timer(components);
+            appChekcer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)menuButton).BeginInit();
             sidebarMenu.SuspendLayout();
             homePanel.SuspendLayout();
@@ -72,7 +73,6 @@
             sidebarMenu.Controls.Add(NoAllowedAppsControl);
             sidebarMenu.Controls.Add(SettingsControl);
             sidebarMenu.Controls.Add(GoogleAccountControl);
-            sidebarMenu.Controls.Add(testNotificationBtn);
             sidebarMenu.Controls.Add(ReturnControl);
             sidebarMenu.Dock = DockStyle.Left;
             sidebarMenu.Location = new Point(0, 0);
@@ -115,21 +115,10 @@
             GoogleAccountControl.UseVisualStyleBackColor = false;
             GoogleAccountControl.Click += GoogleAccountControl_Clicked;
             // 
-            // testNotificationBtn
-            // 
-            testNotificationBtn.BackColor = Color.FromArgb(205, 232, 229);
-            testNotificationBtn.Location = new Point(3, 277);
-            testNotificationBtn.Name = "testNotificationBtn";
-            testNotificationBtn.Size = new Size(245, 70);
-            testNotificationBtn.TabIndex = 7;
-            testNotificationBtn.Text = "Test Notification";
-            testNotificationBtn.UseVisualStyleBackColor = false;
-            testNotificationBtn.Click += testNotificationBtn_Click;
-            // 
             // ReturnControl
             // 
             ReturnControl.BackColor = Color.FromArgb(205, 232, 229);
-            ReturnControl.Location = new Point(3, 353);
+            ReturnControl.Location = new Point(3, 277);
             ReturnControl.Name = "ReturnControl";
             ReturnControl.Size = new Size(245, 70);
             ReturnControl.TabIndex = 6;
@@ -233,6 +222,18 @@
             LabelUntilDate.Text = "0";
             LabelUntilDate.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // notificationTimer
+            // 
+            notificationTimer.Enabled = true;
+            notificationTimer.Interval = 600;
+            notificationTimer.Tick += notificationTimer_Tick;
+            // 
+            // appChekcer
+            // 
+            appChekcer.Enabled = true;
+            appChekcer.Interval = 600;
+            appChekcer.Tick += appChekcer_Tick;
+            // 
             // HomeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -275,6 +276,7 @@
         private Label LabelUntilDateDescription;
         private Label LabelUntilDate;
         private Button ReturnControl;
-        private Button testNotificationBtn;
+        private System.Windows.Forms.Timer notificationTimer;
+        private System.Windows.Forms.Timer appChekcer;
     }
 }
