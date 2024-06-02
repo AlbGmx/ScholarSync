@@ -256,8 +256,12 @@ namespace SchoolSync
 
         private void notificationTimer_Tick(object sender, EventArgs e)
         {
-            displayNotification();
-            notificationTimer.Stop();
+            if (File.Exists("token\\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user"))
+            {
+                displayNotification();
+                notificationTimer.Stop();
+            }
+            
         }
 
         private void appChekcer_Tick(object sender, EventArgs e)

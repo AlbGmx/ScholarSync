@@ -1,4 +1,6 @@
-﻿namespace SchoolSync.Forms
+﻿using ScholarSync.Forms;
+
+namespace SchoolSync.Forms
 {
     public partial class SettingsForm : Form
     {
@@ -41,6 +43,8 @@
         private void SettingsForm_Load(object? sender, EventArgs e)
         {
             ControlBox = false;
+            //dismissTime.Text = (NotificationForm.GetSnoozeTime()/60000).ToString();
+            //notAllowAppTime.Text = (Utils.GetAppTimer() / 60000).ToString();
         }
 
         private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)
@@ -81,7 +85,7 @@
         private void TextBoxFromDate_TextChanged(object? sender, EventArgs e)
         {
             if (int.TryParse(tBoxFromDate.Text, out int daysDifference))
-            { 
+            {
                 if (daysDifference < MINIMUM_DAY_DIFFERENCE)
                 {
                     daysDifference = MINIMUM_DAY_DIFFERENCE;

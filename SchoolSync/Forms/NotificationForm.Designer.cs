@@ -60,7 +60,7 @@ namespace ScholarSync.Forms
             // 
             // snoozeTimer
             // 
-            snoozeTimer.Interval = 6000;
+            snoozeTimer.Interval = 60000;
             snoozeTimer.Tick += snoozeTimer_Tick;
             // 
             // showTimer
@@ -89,7 +89,6 @@ namespace ScholarSync.Forms
 
         private Button snoozeLabel;
         private Button dismissLabel;
-        private System.Windows.Forms.Timer snoozeTimer;
         private System.Windows.Forms.Timer showTimer;
 
         private int panelHeight = 80;
@@ -240,5 +239,7 @@ namespace ScholarSync.Forms
             snoozeLabel.Location = new Point(132, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10 + warningPanel);
             dismissLabel.Location = new Point(213, (panelHeight * events.Items.Count) + (spacing * (events.Items.Count - 1)) + 10 + warningPanel);
         }
+
+        private System.Windows.Forms.Timer snoozeTimer;
     }
 }
