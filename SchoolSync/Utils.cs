@@ -57,10 +57,20 @@ namespace SchoolSync
 
         private static void AppTimer()
         {
-            timer = new(60000);
+            timer = new(3600000);
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
             timer.Start();
+        }
+
+        public static double GetAppTimer()
+        {
+            return timer.Interval;
+        }
+
+        public static void SetAppTimer(int time)
+        {
+            timer.Interval = time;
         }
 
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -104,6 +114,27 @@ namespace SchoolSync
                     writer.WriteLine($"{kvp.Key},{kvp.Value}");
                 }
             }
+        }
+
+        public static void SaveApplicationList()
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (var kvp in appList)
+                {
+                    writer.WriteLine($"{kvp.Key},{kvp.Value}");
+                }
+            }
+        }
+
+        public static Dictionary<string, int> getDictiorany()
+        {
+            return appList;
+        }
+
+        public static void RemoveAppFromList(string key)
+        {
+            appList.Remove(key); 
         }
 
         public static Dictionary<string, int> LoadApplicationList(string filePath)

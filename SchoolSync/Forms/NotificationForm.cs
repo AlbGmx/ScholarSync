@@ -30,6 +30,18 @@ namespace ScholarSync.Forms
 
         }
 
+        public static void setSnoozeTime(int time)
+        {
+            //snoozeTimer.Interval = time * 60000;
+        }
+
+        public static int GetSnoozeTime()
+        {
+            //return snoozeTimer.Interval;
+            return 0;
+        }
+
+
         private void Position()
         {
             int ScreenWidth = Screen.PrimaryScreen.WorkingArea.Width;
